@@ -19,15 +19,20 @@ public class JMETest01 extends SimpleApplication{
 		
 
 		Box b1 = new Box();
-		b1.updateGeometry(new Vector3f(5, 5, 5), 1, 1, 1);
-//		new Vector3f(5, 5, 5);
+		b1.updateGeometry(new Vector3f(2, 1, -3), 1, 1, 1);
 		Geometry geo1 = new Geometry("Box", b1);
 		Material mat1 = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat1.setColor("Color", ColorRGBA.Red);
 		geo1.setMaterial(mat1);
 
+		geo1.move(3, -2, 1);
+		geo.setLocalTranslation(new Vector3f(2, 1, -3));
+		geo.setLocalScale(0.5f);
+		geo1.scale(2f);
+		
 		rootNode.attachChild(geo);
 		rootNode.attachChild(geo1);
+		
 		
 	}
 
