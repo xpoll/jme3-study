@@ -18,10 +18,10 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Sphere;
 
-public class JMETest8 extends SimpleApplication {
+public class JMETest08 extends SimpleApplication {
 
 	public static void main(String[] args) {
-		new JMETest8().start();
+		new JMETest08().start();
 	}
 	
 	Node shootables;
