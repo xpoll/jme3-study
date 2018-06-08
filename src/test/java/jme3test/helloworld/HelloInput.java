@@ -45,6 +45,8 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 5 - how to map keys and mousebuttons to actions */
 public class HelloInput extends SimpleApplication {
 
@@ -57,7 +59,9 @@ public class HelloInput extends SimpleApplication {
 
   @Override
   public void simpleInitApp() {
-      Box b = new Box(1, 1, 1);
+    JMETestCommon.init(flyCam, assetManager, rootNode, 50);
+      
+    Box b = new Box(1, 1, 1);
     player = new Geometry("Player", b);
     Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     mat.setColor("Color", ColorRGBA.Blue);
@@ -69,7 +73,7 @@ public class HelloInput extends SimpleApplication {
   /** Custom Keybinding: Map named actions to inputs. */
   private void initKeys() {
     /** You can map one or several inputs to one named mapping. */
-    inputManager.addMapping("Pause",  new KeyTrigger(keyInput.KEY_P));
+    inputManager.addMapping("Pause",  new KeyTrigger(KeyInput.KEY_P));
     inputManager.addMapping("Left",   new KeyTrigger(KeyInput.KEY_J));
     inputManager.addMapping("Right",  new KeyTrigger(KeyInput.KEY_K));
     inputManager.addMapping("Rotate", new KeyTrigger(KeyInput.KEY_SPACE), // spacebar!

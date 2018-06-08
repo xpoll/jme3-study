@@ -45,6 +45,8 @@ import com.jme3.scene.shape.Sphere;
 import com.jme3.texture.Texture;
 import com.jme3.util.TangentBinormalGenerator;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 6 - how to give an object's surface a material and texture.
  * How to make objects transparent. How to make bumpy and shiny surfaces.  */
 public class HelloMaterial extends SimpleApplication {
@@ -56,6 +58,7 @@ public class HelloMaterial extends SimpleApplication {
 
   @Override
   public void simpleInitApp() {
+    JMETestCommon.init(flyCam, assetManager, rootNode, 50);
 
     /** A simple textured cube -- in good MIP map quality. */
     Box cube1Mesh = new Box( 1f,1f,1f);

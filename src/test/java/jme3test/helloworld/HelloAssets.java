@@ -41,6 +41,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 3 - how to load an OBJ model, and OgreXML model, 
  * a material/texture, or text. */
 public class HelloAssets extends SimpleApplication {
@@ -52,6 +54,7 @@ public class HelloAssets extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        JMETestCommon.init(flyCam, assetManager, rootNode, 50);
 
         /** Load a teapot model (OBJ file from test-data) */
         Spatial teapot = assetManager.loadModel("Models/Teapot/Teapot.obj");

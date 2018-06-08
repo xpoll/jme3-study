@@ -38,6 +38,8 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 4 - how to trigger repeating actions from the main event loop.
  * In this example, you use the loop to make the player character 
  * rotate continuously. */
@@ -52,6 +54,8 @@ public class HelloLoop extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        JMETestCommon.init(flyCam, assetManager, rootNode, 50);
+        
         /** this blue box is our player character */
         Box b = new Box(1, 1, 1);
         player = new Geometry("blue cube", b);
