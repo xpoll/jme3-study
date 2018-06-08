@@ -39,6 +39,8 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 1 - how to get started with the most simple JME 3 application.
  * Display a blue 3D cube and view from all sides by
  * moving the mouse and pressing the WASD keys. */
@@ -51,6 +53,8 @@ public class HelloJME3 extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        JMETestCommon.init(flyCam, assetManager, rootNode, 50);
+        
         Box b = new Box(1, 1, 1); // create cube shape
         Geometry geom = new Geometry("Box", b);  // create cube geometry from the shape
         Material mat = new Material(assetManager,

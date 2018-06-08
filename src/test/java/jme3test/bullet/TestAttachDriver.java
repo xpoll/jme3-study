@@ -69,7 +69,7 @@ public class TestAttachDriver extends SimpleApplication implements ActionListene
     private float accelerationValue = 0;
     private Vector3f jumpForce = new Vector3f(0, 3000, 0);
     private BulletAppState bulletAppState;
-    
+
     public static void main(String[] args) {
         TestAttachDriver app = new TestAttachDriver();
         app.start();
@@ -79,7 +79,7 @@ public class TestAttachDriver extends SimpleApplication implements ActionListene
     public void simpleInitApp() {
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        bulletAppState.getPhysicsSpace().enableDebug(assetManager);
+        bulletAppState.setDebugEnabled(true);
         setupKeys();
         setupFloor();
         buildPlayer();
@@ -112,7 +112,7 @@ public class TestAttachDriver extends SimpleApplication implements ActionListene
         tex.setMinFilter(Texture.MinFilter.Trilinear);
         mat.setTexture("ColorMap", tex);
 
-        Box floor = new Box(Vector3f.ZERO, 100, 1f, 100);
+        Box floor = new Box(100, 1f, 100);
         Geometry floorGeom = new Geometry("Floor", floor);
         floorGeom.setMaterial(mat);
         floorGeom.setLocalTranslation(new Vector3f(0f, -3, 0f));

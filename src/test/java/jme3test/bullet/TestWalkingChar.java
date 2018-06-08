@@ -171,7 +171,7 @@ public class TestWalkingChar extends SimpleApplication implements ActionListener
         float zOff = -40;
         float startpt = bLength / 4 - xOff;
         float height = 6.1f;
-        brick = new Box(Vector3f.ZERO, bLength, bHeight, bWidth);
+        brick = new Box(bLength, bHeight, bWidth);
         brick.scaleTextureCoordinates(new Vector2f(1f, .5f));
         for (int j = 0; j < 15; j++) {
             for (int i = 0; i < 4; i++) {
@@ -297,7 +297,7 @@ public class TestWalkingChar extends SimpleApplication implements ActionListener
         model = (Node) assetManager.loadModel("Models/Oto/Oto.mesh.xml");
         //model.setLocalScale(0.5f);
         model.addControl(character);
-        character.setPhysicsLocation(new Vector3f(-140, 15, -10));
+        character.setPhysicsLocation(new Vector3f(-140, 40, -10));
         rootNode.attachChild(model);
         getPhysicsSpace().add(character);
     }

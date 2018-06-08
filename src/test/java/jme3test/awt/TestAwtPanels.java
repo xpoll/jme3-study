@@ -14,6 +14,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -21,6 +22,7 @@ import javax.swing.SwingUtilities;
 
 public class TestAwtPanels extends SimpleApplication {
 
+    final private static CountDownLatch panelsAreReady = new CountDownLatch(1);
     private static TestAwtPanels app;
     private static AwtPanel panel, panel2;
     private static int panelsClosed = 0;
@@ -56,6 +58,16 @@ public class TestAwtPanels extends SimpleApplication {
         
         SwingUtilities.invokeLater(new Runnable(){
             public void run(){
+                /*
+                 * Sleep 2 seconds to ensure there's no race condition.
+                 * The sleep is not required for correctness.
+                 */
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException exception) {
+                    return;
+                }
+
                 final AwtPanelsContext ctx = (AwtPanelsContext) app.getContext();
                 panel = ctx.createPanel(PaintMode.Accelerated);
                 panel.setPreferredSize(new Dimension(400, 300));
@@ -66,6 +78,10 @@ public class TestAwtPanels extends SimpleApplication {
                 
                 createWindowForPanel(panel, 300);
                 createWindowForPanel(panel2, 700);
+                /*
+                 * Both panels are ready.
+                 */
+                panelsAreReady.countDown();
             }
         });
     }
@@ -74,13 +90,21 @@ public class TestAwtPanels extends SimpleApplication {
     public void simpleInitApp() {
         flyCam.setDragToRotate(true);
         
-        Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+        Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", assetManager.loadTexture("Interface/Logo/Monkey.jpg"));
         geom.setMaterial(mat);
         rootNode.attachChild(geom);
-        
+        /*
+         * Wait until both AWT panels are ready.
+         */
+        try {
+            panelsAreReady.await();
+        } catch (InterruptedException exception) {
+            throw new RuntimeException("Interrupted while waiting for panels", exception);
+        }
+
         panel.attachTo(true, viewPort);
         guiViewPort.setClearFlags(true, true, true);
         panel2.attachTo(false, guiViewPort);

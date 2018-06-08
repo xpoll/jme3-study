@@ -48,6 +48,7 @@ import com.jme3.scene.shape.Box;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext.Type;
 import com.jme3.texture.FrameBuffer;
+import com.jme3.texture.Image;
 import com.jme3.texture.Image.Format;
 import com.jme3.texture.Texture2D;
 import com.jme3.util.BufferUtils;
@@ -85,7 +86,7 @@ public class TestRenderToMemory extends SimpleApplication implements SceneProces
     private final ByteBuffer cpuBuf = BufferUtils.createByteBuffer(width * height * 4);
     private final byte[] cpuArray = new byte[width * height * 4];
     private final BufferedImage image = new BufferedImage(width, height,
-                                            BufferedImage.TYPE_4BYTE_ABGR);
+                                            BufferedImage.TYPE_INT_BGR);
 
     private class ImageDisplay extends JPanel {
 
@@ -115,7 +116,7 @@ public class TestRenderToMemory extends SimpleApplication implements SceneProces
             frames ++;
             t = t2;
 
-            if (total > 1000){
+            if (total > timer.getResolution()) {
                 fps = frames;
                 total = 0;
                 frames = 0;
@@ -161,7 +162,7 @@ public class TestRenderToMemory extends SimpleApplication implements SceneProces
         renderer.readFrameBuffer(offBuffer, cpuBuf);
 
         synchronized (image) {
-            Screenshots.convertScreenShot(cpuBuf, image);    
+            Screenshots.convertScreenShot2(cpuBuf.asIntBuffer(), image);    
         }
 
         if (display != null)
@@ -201,7 +202,7 @@ public class TestRenderToMemory extends SimpleApplication implements SceneProces
         offView.setOutputFrameBuffer(offBuffer);
 
         // setup framebuffer's scene
-        Box boxMesh = new Box(Vector3f.ZERO, 1,1,1);
+        Box boxMesh = new Box(1, 1, 1);
         Material material = assetManager.loadMaterial("Interface/Logo/Logo.j3m");
         offBox = new Geometry("box", boxMesh);
         offBox.setMaterial(material);

@@ -52,18 +52,20 @@ public class TestNiftyGui extends SimpleApplication implements ScreenController 
         app.start();
     }
 
+    @Override
     public void simpleInitApp() {
-        Box b = new Box(Vector3f.ZERO, 1, 1, 1);
+        Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", assetManager.loadTexture("Interface/Logo/Monkey.jpg"));
         geom.setMaterial(mat);
         rootNode.attachChild(geom);
 
-        NiftyJmeDisplay niftyDisplay = new NiftyJmeDisplay(assetManager,
-                                                          inputManager,
-                                                          audioRenderer,
-                                                          guiViewPort);
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+                assetManager,
+                inputManager,
+                audioRenderer,
+                guiViewPort);
         nifty = niftyDisplay.getNifty();
         nifty.fromXml("Interface/Nifty/HelloJme.xml", "start", this);
 
@@ -76,14 +78,17 @@ public class TestNiftyGui extends SimpleApplication implements ScreenController 
         inputManager.setCursorVisible(true);
     }
 
+    @Override
     public void bind(Nifty nifty, Screen screen) {
         System.out.println("bind( " + screen.getScreenId() + ")");
     }
 
+    @Override
     public void onStartScreen() {
         System.out.println("onStartScreen");
     }
 
+    @Override
     public void onEndScreen() {
         System.out.println("onEndScreen");
     }

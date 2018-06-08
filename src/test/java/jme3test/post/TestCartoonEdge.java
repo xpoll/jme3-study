@@ -61,6 +61,10 @@ public class TestCartoonEdge extends SimpleApplication {
         if (renderer.getCaps().contains(Caps.GLSL100)){
             fpp=new FilterPostProcessor(assetManager);
             //fpp.setNumSamples(4);
+            int numSamples = getContext().getSettings().getSamples();
+            if( numSamples > 0 ) {
+                fpp.setNumSamples(numSamples); 
+            }
             CartoonEdgeFilter toon=new CartoonEdgeFilter();
             toon.setEdgeColor(ColorRGBA.Yellow);
             fpp.addFilter(toon);
@@ -76,7 +80,7 @@ public class TestCartoonEdge extends SimpleApplication {
         }else if (spatial instanceof Geometry){
             Geometry g = (Geometry) spatial;
             Material m = g.getMaterial();
-            if (m.getMaterialDef().getName().equals("Phong Lighting")){
+            if (m.getMaterialDef().getMaterialParam("UseMaterialColors") != null) {
                 Texture t = assetManager.loadTexture("Textures/ColorRamp/toon.png");
 //                t.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
 //                t.setMagFilter(Texture.MagFilter.Nearest);

@@ -40,6 +40,8 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 2 - How to use nodes as handles to manipulate objects in the scene.
  * You can rotate, translate, and scale objects by manipulating their parent nodes.
  * The Root Node is special: Only what is attached to the Root Node appears in the scene. */
@@ -52,6 +54,7 @@ public class HelloNode extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        JMETestCommon.init(flyCam, assetManager, rootNode, 50);
 
         /** create a blue box at coordinates (1,-1,1) */
         Box box1 = new Box(1,1,1);

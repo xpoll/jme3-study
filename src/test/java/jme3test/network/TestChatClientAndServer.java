@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2012 jMonkeyEngine
+ * Copyright (c) 2015 jMonkeyEngine
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,47 +29,46 @@
  * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-package jme3test.conversion;
-
-import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.math.Quaternion;
-import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Mesh;
-import jme3tools.converters.model.ModelConverter;
-
-public class TestTriangleStrip extends SimpleApplication {
+package jme3test.network;
 
 
-    public static void main(String[] args){
-        TestTriangleStrip app = new TestTriangleStrip();
-        app.start();
-    }
+/**
+ *  Combines the server instance and a client instance into the
+ *  same JVM to show an example of, and to test, a pattern like
+ *  self-hosted multiplayer games.
+ *
+ *  @author    Paul Speed
+ */
+public class TestChatClientAndServer {
+    
+    public static void main( String... args ) throws Exception {
 
-    public void simpleInitApp() {
-        Geometry teaGeom = (Geometry) assetManager.loadModel("Models/Teapot/Teapot.obj");
-        Mesh teaMesh = teaGeom.getMesh();
-        ModelConverter.generateStrips(teaMesh, true, false, 24, 0);
+        System.out.println("Starting chat server...");    
+        TestChatServer chatServer = new TestChatServer();
+        chatServer.start();
+ 
+        System.out.println("Waiting for connections on port:" + TestChatServer.PORT);
+ 
+        // Now launch a client
 
-        // show normals as material
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/ShowNormals.j3md");
-
-        for (int y = -10; y < 10; y++){
-            for (int x = -10; x < 10; x++){
-                Geometry teaClone = new Geometry("teapot", teaMesh);
-                teaClone.setMaterial(mat);
-
-                teaClone.setLocalTranslation(x * .5f, 0, y * .5f);
-                teaClone.setLocalScale(.5f);
-
-                rootNode.attachChild(teaClone);
+        TestChatClient test = new TestChatClient("localhost");
+        test.setVisible(true);
+        
+        // Register a shutdown hook to get a message on the console when the
+        // app actually finishes
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+                @Override
+                public void run() {
+                    System.out.println("Client and server test is terminating.");
+                }
+            });
+                
+        // Keep running basically forever or until the server
+        // shuts down
+        while( chatServer.isRunning() ) {
+            synchronized (chatServer) {
+                chatServer.wait();
             }
-        }
-
-        cam.setLocation(new Vector3f(8.378951f, 5.4324f, 8.795956f));
-        cam.setRotation(new Quaternion(-0.083419204f, 0.90370524f, -0.20599906f, -0.36595422f));
+        }    
     }
-
 }

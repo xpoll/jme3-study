@@ -17,6 +17,7 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture.MagFilter;
 import com.jme3.texture.Texture.MinFilter;
 import com.jme3.texture.Texture2D;
+import com.jme3.texture.image.ColorSpace;
 import com.jme3.texture.image.ImageRaster;
 import com.jme3.util.BufferUtils;
 import java.nio.ByteBuffer;
@@ -27,7 +28,7 @@ public class TestImageRaster extends SimpleApplication {
         int width = image.getWidth();
         int height = image.getHeight();
         ByteBuffer data = BufferUtils.createByteBuffer( (int)Math.ceil(newFormat.getBitsPerPixel() / 8.0) * width * height);
-        Image convertedImage = new Image(newFormat, width, height, data);
+        Image convertedImage = new Image(newFormat, width, height, data,null, image.getColorSpace());
         
         ImageRaster sourceReader = ImageRaster.create(image);
         ImageRaster targetWriter = ImageRaster.create(convertedImage);
@@ -66,7 +67,7 @@ public class TestImageRaster extends SimpleApplication {
     }
     
     private Image createTestImage() {
-        Image testImage = new Image(Format.BGR8, 4, 3, BufferUtils.createByteBuffer(4 * 4 * 3));
+        Image testImage = new Image(Format.BGR8, 4, 3, BufferUtils.createByteBuffer(4 * 4 * 3), null, ColorSpace.Linear);
         
         ImageRaster io = ImageRaster.create(testImage);
         io.setPixel(0, 0, ColorRGBA.Black);
@@ -114,12 +115,6 @@ public class TestImageRaster extends SimpleApplication {
         image = convertImage(image, Format.RGB16F_to_RGB111110F);
         convertAndPutImage(image, 25, 0);
         
-        image = convertImage(image, Format.RGBA16);
-        convertAndPutImage(image, 0, 5);
-        
-        image = convertImage(image, Format.RGB16);
-        convertAndPutImage(image, 5, 5);
-        
         image = convertImage(image, Format.RGBA8);
         convertAndPutImage(image, 10, 5);
         
@@ -132,10 +127,16 @@ public class TestImageRaster extends SimpleApplication {
         image = convertImage(image, Format.BGR8);
         convertAndPutImage(image, 25, 5);
         
+        image = convertImage(image, Format.ARGB8);
+        convertAndPutImage(image, 30, 5);
+        
+        image = convertImage(image, Format.BGRA8);
+        convertAndPutImage(image, 35, 5);
+        
         image = convertImage(image, Format.RGB5A1);
         convertAndPutImage(image, 0, 10);
         
-        image = convertImage(image, Format.ARGB4444);
+        image = convertImage(image, Format.RGB565);
         convertAndPutImage(image, 5, 10);
         
         image = convertImage(image, Format.Luminance32F);
@@ -147,17 +148,11 @@ public class TestImageRaster extends SimpleApplication {
         image = convertImage(image, Format.Luminance16F);
         convertAndPutImage(image, 10, 15);
         
-        image = convertImage(image, Format.Luminance16Alpha16);
+        image = convertImage(image, Format.Luminance8Alpha8);
         convertAndPutImage(image, 15, 15);
         
-        image = convertImage(image, Format.Luminance16);
-        convertAndPutImage(image, 20, 15);
-        
-        image = convertImage(image, Format.Luminance8Alpha8);
-        convertAndPutImage(image, 25, 15);
-        
         image = convertImage(image, Format.Luminance8);
-        convertAndPutImage(image, 30, 15);
+        convertAndPutImage(image, 20, 15);
     }
     
     public static void main(String[] args) {

@@ -61,8 +61,8 @@ public class TestCollisionGroups extends SimpleApplication {
     public void simpleInitApp() {
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
-        bulletAppState.getPhysicsSpace().enableDebug(assetManager);
-        
+        bulletAppState.setDebugEnabled(true);
+
         // Add a physics sphere to the world
         Node physicsSphere = PhysicsTestHelper.createPhysicsTestNode(assetManager, new SphereCollisionShape(1), 1);
         physicsSphere.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(3, 6, 0));
@@ -85,7 +85,7 @@ public class TestCollisionGroups extends SimpleApplication {
         getPhysicsSpace().add(node2);
 
         // the floor, does not move (mass=0)
-        Node node3 = PhysicsTestHelper.createPhysicsTestNode(assetManager, new MeshCollisionShape(new Box(Vector3f.ZERO, 100f, 0.2f, 100f)), 0);
+        Node node3 = PhysicsTestHelper.createPhysicsTestNode(assetManager, new MeshCollisionShape(new Box(100f, 0.2f, 100f)), 0);
         node3.getControl(RigidBodyControl.class).setPhysicsLocation(new Vector3f(0f, -6, 0f));
         rootNode.attachChild(node3);
         getPhysicsSpace().add(node3);
