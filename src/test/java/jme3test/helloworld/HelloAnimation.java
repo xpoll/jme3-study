@@ -45,6 +45,8 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 7 - how to load an OgreXML model and play an animation, 
  * using channels, a controller, and an AnimEventListener. */
 public class HelloAnimation extends SimpleApplication
@@ -61,6 +63,8 @@ public class HelloAnimation extends SimpleApplication
 
   @Override
   public void simpleInitApp() {
+    JMETestCommon.init(flyCam, assetManager, rootNode, 50);
+      
     viewPort.setBackgroundColor(ColorRGBA.LightGray);
     initKeys();
 

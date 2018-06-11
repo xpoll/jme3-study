@@ -52,6 +52,8 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Sphere;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /** Sample 8 - how to let the user pick (select) objects in the scene 
  * using the mouse or key presses. Can be used for shooting, opening doors, etc. */
 public class HelloPicking extends SimpleApplication {
@@ -65,6 +67,8 @@ public class HelloPicking extends SimpleApplication {
 
   @Override
   public void simpleInitApp() {
+    JMETestCommon.init(flyCam, assetManager, rootNode, 50);
+      
     initCrossHairs(); // a "+" in the middle of the screen to help aiming
     initKeys();       // load custom key mappings
     initMark();       // a red sphere to mark the hit

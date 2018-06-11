@@ -50,6 +50,8 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
+import cn.blmdz.jme3.test.JMETestCommon;
+
 /**
  * Example 9 - How to make walls and floors solid.
  * This collision code uses Physics and a custom Action Listener.
@@ -76,6 +78,8 @@ public class HelloCollision extends SimpleApplication
   }
 
   public void simpleInitApp() {
+    JMETestCommon.init(flyCam, assetManager, rootNode, 50);
+    
     /** Set up Physics */
     bulletAppState = new BulletAppState();
     stateManager.attach(bulletAppState);
@@ -88,7 +92,7 @@ public class HelloCollision extends SimpleApplication
     setUpLight();
 
     // We load the scene from the zip file and adjust its size.
-    assetManager.registerLocator("town.zip", ZipLocator.class);
+    assetManager.registerLocator(this.getClass().getResource("/").getPath() + "town.zip", ZipLocator.class);
     sceneModel = assetManager.loadModel("main.scene");
     sceneModel.setLocalScale(2f);
 
