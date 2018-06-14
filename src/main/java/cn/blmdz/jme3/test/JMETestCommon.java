@@ -7,6 +7,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.shape.Line;
 
 public class JMETestCommon {
@@ -19,7 +20,7 @@ public class JMETestCommon {
      * 
      * Speed: 100;
      */
-    public static void init(FlyByCamera flyCam, AssetManager assetManager, Node rootNode, float moveSpeed) {
+    public static void init1(FlyByCamera flyCam, AssetManager assetManager, Node rootNode, float moveSpeed) {
         flyCam.setMoveSpeed(moveSpeed);
 
         Line lineX = new Line(new Vector3f(-100, 0, 0), new Vector3f(0, 0, 0));
@@ -59,5 +60,38 @@ public class JMETestCommon {
         
         rootNode.attachChild(node);
         
+    }
+    
+
+    /**
+     * + X: Red;
+     * + Y: Yellow;
+     * + Z: Blue;
+     * - XYZ: Write;
+     */
+    public static void init(FlyByCamera flyCam, AssetManager assetManager, Node rootNode, float moveSpeed) {
+        flyCam.setMoveSpeed(moveSpeed);
+        // 创建X、Y、Z方向的箭头，作为参考坐标系。
+        createArrow(assetManager, rootNode, new Vector3f(-50, 0, 0), ColorRGBA.White);
+        createArrow(assetManager, rootNode, new Vector3f(0, -50, 0), ColorRGBA.White);
+        createArrow(assetManager, rootNode, new Vector3f(0, 0, -50), ColorRGBA.White);
+        createArrow(assetManager, rootNode, new Vector3f(50, 0, 0), ColorRGBA.Red);
+        createArrow(assetManager, rootNode, new Vector3f(0, 50, 0), ColorRGBA.Yellow);
+        createArrow(assetManager, rootNode, new Vector3f(0, 0, 50), ColorRGBA.Blue);
+    }
+    
+
+
+    private static void createArrow(AssetManager assetManager, Node rootNode, Vector3f vec3, ColorRGBA color) {
+        // 创建材质，设定箭头的颜色
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setColor("Color", color);
+
+        // 创建几何物体，应用箭头网格。
+        Geometry geom = new Geometry("arrow", new Arrow(vec3));
+        geom.setMaterial(mat);
+
+        // 添加到场景中
+        rootNode.attachChild(geom);
     }
 }
