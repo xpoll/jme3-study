@@ -27,7 +27,7 @@ public class JMETest13 extends SimpleApplication {
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.getAdditionalRenderState().setWireframe(true);
         geom.setMaterial(mat);
-//        rootNode.attachChild(geom);
+        rootNode.attachChild(geom);
 	}
 	
 	
