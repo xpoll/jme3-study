@@ -33,3 +33,4 @@ logging.fileDir*
 /target/
 **/main/resources/static/
 **/application-local.yaml
+dependency-reduced-pom.xml

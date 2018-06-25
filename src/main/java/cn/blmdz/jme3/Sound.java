@@ -22,9 +22,7 @@ public class Sound {
     }
     
     private void loadSounds() {
-        System.out.println("111111111111111111111111111");
         music = new AudioNode(assetManager,"Sounds/Music.ogg");
-        System.out.println("222222222222");
         music.setPositional(false);
         music.setReverbEnabled(false);
         music.setLooping(true);
